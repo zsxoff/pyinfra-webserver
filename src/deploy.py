@@ -1,4 +1,4 @@
-from pyinfra.operations import apt, server
+from pyinfra.operations import apt, server, systemd
 
 
 APT_CACHE_TIME = 3600
@@ -30,5 +30,26 @@ apt.packages(
     present=True,
     update=True,
     cache_time=APT_CACHE_TIME,
+    _sudo=True,
+)
+
+# Logrotate
+
+apt.packages(
+    name="APT - Install Logrotate",
+    packages=["logrotate"],
+    latest=True,
+    no_recommends=True,
+    present=True,
+    update=True,
+    cache_time=APT_CACHE_TIME,
+    _sudo=True,
+)
+
+systemd.service(
+    name="Systemd - Enable Logrotate",
+    service="logrotate.timer",
+    running=True,
+    enabled=True,
     _sudo=True,
 )

@@ -1,0 +1,35 @@
+# Web server with pyinfra
+
+## What's inside
+
+| File                               | Description           |
+| :--------------------------------- | :-------------------- |
+| [./src/deploy.py](./src/deploy.py) | Setup base web server |
+
+## How to deploy this
+
+### On local machine
+
+```bash
+pyinfra @local ./src/deploy.py
+```
+
+### On remote machine
+
+```bash
+pyinfra --ssh-user admin --ssh-key ~/.ssh/id_ed25519 192.168.0.100 ./src/deploy.py
+```
+
+### On many remote machines
+
+Copy `inventory.py.example` to `inventory.py`, setup your hosts like official [Create a Deploy](https://docs.pyinfra.com/en/3.x/getting-started.html#create-a-deploy) docs and run:
+
+```bash
+pyinfra --ssh-user admin --ssh-key ~/.ssh/id_ed25519 inventory.py ./src/deploy.py
+```
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+This project is licensed under the terms of the [MIT](https://opensource.org/licenses/MIT) license (see [LICENSE](https://github.com/zsxoff/pyinfra-webserver/blob/main/LICENSE) file).

@@ -1,6 +1,8 @@
 from pyinfra.operations import apt, server
 
 
+APT_CACHE_TIME = 3600
+
 # Locales
 
 server.shell(
@@ -27,5 +29,6 @@ apt.packages(
     no_recommends=True,
     present=True,
     update=True,
+    cache_time=APT_CACHE_TIME,
     _sudo=True,
 )

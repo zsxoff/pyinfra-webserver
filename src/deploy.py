@@ -5,12 +5,23 @@ APT_CACHE_TIME = 3600
 
 # Locales
 
-server.shell(
-    name="Locales - Allow and generate only en_US and ru_RU locales",
-    commands=[
-        "echo 'en_US.UTF-8 UTF-8\nru_RU.UTF-8 UTF-8' > /etc/locale.gen",
-        "locale-gen",
-    ],
+server.locale(
+    name="Locales - Ensure en_US.UTF-8 locale is present",
+    locale="en_US.UTF-8",
+    _sudo=True,
+)
+
+server.locale(
+    name="Locales - Ensure ru_RU.UTF-8 locale is present",
+    locale="ru_RU.UTF-8",
+    _sudo=True,
+)
+
+# Timezone
+
+server.timezone(
+    name="Set the timezone to UTC",
+    timezone="UTC",
     _sudo=True,
 )
 

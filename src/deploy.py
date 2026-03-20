@@ -33,6 +33,29 @@ apt.packages(
     _sudo=True,
 )
 
+# Fail2ban
+
+apt.packages(
+    name="APT - Install Fail2ban",
+    packages=["fail2ban"],
+    latest=True,
+    no_recommends=True,
+    present=True,
+    update=True,
+    cache_time=APT_CACHE_TIME,
+    _sudo=True,
+)
+
+systemd.service(
+    name="Systemd - Enable Fail2ban",
+    service="fail2ban.service",
+    running=True,
+    enabled=True,
+    _sudo=True,
+)
+
+# TODO(zsxoff): Copy /etc/fail2ban/jail.conf to jail.local.
+
 # Logrotate
 
 apt.packages(

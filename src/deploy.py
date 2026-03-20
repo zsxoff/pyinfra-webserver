@@ -17,7 +17,7 @@ server.shell(
 # System packages
 
 apt.packages(
-    name="System packages - Install base packages",
+    name="APT - Install base system packages",
     packages=[
         "apt-listchanges",
         "ca-certificates",

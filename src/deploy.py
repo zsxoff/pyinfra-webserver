@@ -33,6 +33,51 @@ apt.packages(
     _sudo=True,
 )
 
+# UFW
+
+apt.packages(
+    name="APT - Install UFW",
+    packages=["ufw"],
+    latest=True,
+    no_recommends=True,
+    present=True,
+    update=True,
+    cache_time=APT_CACHE_TIME,
+    _sudo=True,
+)
+
+server.shell(
+    name="UFW - Allow SSH",
+    commands=["ufw allow ssh"],
+    _sudo=True,
+)
+
+server.shell(
+    name="UFW - Default deny incoming",
+    commands=["ufw default deny incoming"],
+    _sudo=True,
+)
+
+server.shell(
+    name="UFW - Default allow outgoing",
+    commands=["ufw default allow outgoing"],
+    _sudo=True,
+)
+
+server.shell(
+    name="UFW - Force enable",
+    commands=["ufw --force enable"],
+    _sudo=True,
+)
+
+systemd.service(
+    name="Systemd - Enable UFW",
+    service="ufw.service",
+    running=True,
+    enabled=True,
+    _sudo=True,
+)
+
 # Fail2ban
 
 apt.packages(

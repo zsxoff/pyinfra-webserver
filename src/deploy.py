@@ -20,7 +20,7 @@ server.locale(
 # Timezone
 
 server.timezone(
-    name="Set the timezone to UTC",
+    name="Timezone - Set the timezone to UTC",
     timezone="UTC",
     _sudo=True,
 )

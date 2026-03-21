@@ -64,6 +64,18 @@ server.shell(
 )
 
 server.shell(
+    name="UFW - Allow 443/TCP",
+    commands=["ufw allow 443/tcp"],
+    _sudo=True,
+)
+
+server.shell(
+    name="UFW - Allow 443/UDP",
+    commands=["ufw allow 443/udp"],
+    _sudo=True,
+)
+
+server.shell(
     name="UFW - Default deny incoming",
     commands=["ufw default deny incoming"],
     _sudo=True,

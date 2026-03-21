@@ -144,3 +144,13 @@ systemd.service(
     enabled=True,
     _sudo=True,
 )
+
+# Sysctl
+
+server.sysctl(
+    name="sysctl - Set net.ipv4.icmp_echo_ignore_all",
+    key="net.ipv4.icmp_echo_ignore_all",
+    value=1,
+    persist=True,
+    _sudo=True,
+)

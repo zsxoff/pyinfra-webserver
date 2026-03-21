@@ -126,7 +126,7 @@ extend-select = [
 lines-after-imports = 2
 lines-between-types = 0
 known-first-party = ["src"]
-known-third-party = []
+known-third-party = ["pyinfra"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 6

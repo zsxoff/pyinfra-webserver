@@ -1,5 +1,9 @@
-from pyinfra.operations import apt, server, systemd
+from pathlib import Path
 
+from pyinfra.operations import apt, files, server, systemd
+
+
+STATIC_FILES = Path(".") / "static"
 
 APT_CACHE_TIME = 3600
 
@@ -22,6 +26,18 @@ server.locale(
 server.timezone(
     name="Timezone - Set the timezone to UTC",
     timezone="UTC",
+    _sudo=True,
+)
+
+# SSH
+
+files.put(
+    name="Files - Put OpenSSH server daemon config",
+    src=(STATIC_FILES / "sshd_config").as_posix(),
+    dest="/etc/ssh/sshd_config",
+    user="root",
+    group="root",
+    mode="644",
     _sudo=True,
 )
 

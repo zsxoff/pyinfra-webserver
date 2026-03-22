@@ -1,0 +1,22 @@
+# Base security
+AllowUsers infra main
+AuthenticationMethods publickey
+PermitRootLogin No
+
+# Logging
+LogLevel VERBOSE
+
+# Supported HostKey algorithms by order of preference
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_rsa_key
+
+# Specifies whether to use compression. The argument must be yes or no (the default)
+Compression yes
+
+# Specifies whether sshd should look up the remote host name, and to check that the
+# resolved host name for the remote IP address maps back to the very same IP address
+UseDNS no
+
+# SSH File Transfer Protocol
+Subsystem sftp /usr/lib/openssh/sftp-server -f AUTHPRIV -l INFO

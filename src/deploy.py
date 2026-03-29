@@ -67,7 +67,7 @@ apt.packages(
 # UFW
 
 server.shell(
-    name="UFW - Configure firewall rules in one shot",
+    name="UFW - Configure firewall rules",
     commands=[
         "ufw reset",
         "ufw allow ssh",

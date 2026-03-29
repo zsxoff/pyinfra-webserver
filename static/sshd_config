@@ -1,7 +1,8 @@
 # Base security
 AllowUsers infra main
 AuthenticationMethods publickey
-PermitRootLogin No
+PermitRootLogin no
+PasswordAuthentication no
 
 # Logging
 LogLevel VERBOSE

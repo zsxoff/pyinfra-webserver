@@ -1,5 +1,4 @@
-# Base security
-AllowUsers infra main
+AllowUsers admin main infra
 AuthenticationMethods publickey
 PermitRootLogin no
 PasswordAuthentication no

@@ -113,10 +113,19 @@ systemd.service(
 
 # Sysctl
 
-server.sysctl(
-    name="sysctl - Set net.ipv4.icmp_echo_ignore_all",
-    key="net.ipv4.icmp_echo_ignore_all",
-    value=1,
-    persist=True,
-    _sudo=True,
-)
+hardening_sysctls = [
+    ("net.ipv4.ip_forward", 0),
+    ("net.ipv4.conf.all.send_redirects", 0),
+    ("net.ipv4.conf.all.accept_source_route", 0),
+    ("net.ipv4.tcp_syncookies", 1),
+    ("net.ipv4.icmp_echo_ignore_all", 1),
+]
+
+for sysctl_key, sysctl_value in hardening_sysctls:  # noqa: WPS481
+    server.sysctl(
+        name=f"sysctl - Set {sysctl_key}",
+        key=sysctl_key,
+        value=sysctl_value,
+        persist=True,
+        _sudo=True,
+    )

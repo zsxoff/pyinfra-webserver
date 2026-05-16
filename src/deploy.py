@@ -54,8 +54,8 @@ apt.packages(
         "fail2ban",
         "locales",
         "logrotate",
+        "nftables",
         "openssh-server",
-        "ufw",
         "unattended-upgrades",
     ],
     latest=True,
@@ -66,26 +66,39 @@ apt.packages(
     _sudo=True,
 )
 
-# UFW
+# Firewall
 
 server.shell(
-    name="UFW - Configure firewall rules",
+    name="Firewall - Configure nftables rules",
     commands=[
-        "ufw reset",
-        "ufw allow ssh",
-        "ufw allow 443/tcp",
-        "ufw allow 443/udp",
-        "ufw default deny incoming",
-        "ufw default allow outgoing",
-        "ufw logging on",
-        "ufw --force enable",
+        "nft delete table inet filter 2>/dev/null || true",
+        "nft add table inet filter",
+        "nft add chain inet filter input '{type filter hook input priority 0;}'",
+        "nft add chain inet filter forward '{type filter hook forward priority 0;}'",
+        "nft add chain inet filter output '{type filter hook output priority 0;}'",
+        "nft add rule inet filter input ct state established,related accept",
+        "nft add rule inet filter input iif lo accept",
+        "nft add rule inet filter input tcp dport 22 accept",
+        "nft add rule inet filter input tcp dport 443 accept",
+        "nft add rule inet filter input udp dport 443 accept",
+        "nft chain inet filter input '{policy drop;}'",
+        "nft chain inet filter forward '{policy drop;}'",
+        "nft chain inet filter output '{policy accept;}'",
+    ],
+    _sudo=True,
+)
+
+server.shell(
+    name="Firewall - Save nftables rules",
+    commands=[
+        "nft list ruleset > /etc/nftables.conf",
     ],
     _sudo=True,
 )
 
 systemd.service(
-    name="Systemd - Enable UFW",
-    service="ufw.service",
+    name="Systemd - Enable nftables",
+    service="nftables.service",
     running=True,
     enabled=True,
     _sudo=True,

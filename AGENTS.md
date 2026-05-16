@@ -19,4 +19,4 @@
 
 ### Server firewall
 
-- This server uses ufw as a firewall
+- This server uses nftables as a firewall

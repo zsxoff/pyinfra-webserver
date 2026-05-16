@@ -10,37 +10,23 @@
 
 ### In your device
 
-Generate SSH key for running pyinfra commands:
-
 ```bash
+# Generate SSH key for running pyinfra commands:
 ssh-keygen -t ed25519 -a 200 -C "infra" -f ~/.ssh/infra
 ```
 
 ### In your server
 
-Create `infra` user with `sudo` capabilities:
-
 ```bash
+# Create `infra` user with `sudo` capabilities:
 sudo useradd -m -s /bin/bash -G sudo -U infra && sudo passwd infra
-```
 
-Add SSH key from your device to `authorized_keys` for `infra` user:
-
-```bash
+# Add SSH key from your device to `authorized_keys` for `infra` user:
 ssh-copy-id infra@<IP>
-```
 
-or edit file manually:
-
-```bash
+# or edit file manually:
 sudo -u infra mkdir -p -m 700 -v /home/infra/.ssh/
-```
-
-```bash
 echo "<publickey>" | sudo -u infra tee -a "/home/infra/.ssh/authorized_keys"
-```
-
-```bash
 sudo chmod 600 authorized_keys /home/infra/.ssh/authorized_keys
 ```
 
@@ -49,13 +35,7 @@ Change OpenSSH server daemon config in `/etc/ssh/sshd_config`:
 ```text
 AllowUsers admin main infra
 AuthenticationMethods publickey
-PermitRootLogin no
-PasswordAuthentication no
-
-# Supported HostKey algorithms by order of preference
 HostKey /etc/ssh/ssh_host_ed25519_key
-
-# SSH File Transfer Protocol
 Subsystem sftp /usr/lib/openssh/sftp-server -f AUTHPRIV -l INFO
 ```
 

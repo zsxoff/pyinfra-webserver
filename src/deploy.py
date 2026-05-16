@@ -51,6 +51,7 @@ apt.packages(
     name="APT - Install base system packages",
     packages=[
         "apt-listchanges",
+        "auditd",
         "ca-certificates",
         "debsums",
         "fail2ban",
@@ -87,6 +88,34 @@ files.put(
     user=ROOT_USER,
     group=ROOT_GROUP,
     mode=ROOT_FILES_DEFAULT_MODE,
+    _sudo=True,
+)
+
+# Auditd
+
+files.put(
+    name="Files - Put auditd rules",
+    src=(STATIC_FILES / "audit.rules").as_posix(),
+    dest="/etc/audit/rules.d/audit.rules",
+    user=ROOT_USER,
+    group=ROOT_GROUP,
+    mode=ROOT_FILES_DEFAULT_MODE,
+    _sudo=True,
+)
+
+server.shell(
+    name="Auditd - Reload audit rules",
+    commands=[
+        "auditctl -R /etc/audit/rules.d/audit.rules",
+    ],
+    _sudo=True,
+)
+
+systemd.service(
+    name="Systemd - Enable Auditd",
+    service="auditd.service",
+    running=True,
+    enabled=True,
     _sudo=True,
 )
 

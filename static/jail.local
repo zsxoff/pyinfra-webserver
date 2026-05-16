@@ -1,0 +1,11 @@
+[INCLUDES]
+before = paths-debian.conf
+
+[DEFAULT]
+bantime = 1h
+banaction = nftables
+banaction_allports = nftables[type=allports]
+backend = systemd
+
+[sshd]
+enabled = true

@@ -6,6 +6,8 @@ from pyinfra.operations import apt, files, server, systemd
 STATIC_FILES = Path(".") / "static"
 
 APT_CACHE_TIME = 3600
+ROOT_USER = "root"
+ROOT_GROUP = "root"
 
 # Locales
 
@@ -35,8 +37,8 @@ files.put(
     name="Files - Put OpenSSH server daemon config",
     src=(STATIC_FILES / "sshd_config").as_posix(),
     dest="/etc/ssh/sshd_config",
-    user="root",
-    group="root",
+    user=ROOT_USER,
+    group=ROOT_GROUP,
     mode="644",
     _sudo=True,
 )
@@ -99,7 +101,23 @@ systemd.service(
     _sudo=True,
 )
 
-# TODO(zsxoff): Copy /etc/fail2ban/jail.conf to jail.local.
+files.put(
+    name="Files - Put fail2ban jail.local config",
+    src=(STATIC_FILES / "jail.local").as_posix(),
+    dest="/etc/fail2ban/jail.local",
+    user=ROOT_USER,
+    group=ROOT_GROUP,
+    mode="644",
+    _sudo=True,
+)
+
+systemd.service(
+    name="Systemd - Restart Fail2Ban after config change",
+    service="fail2ban",
+    running=True,
+    enabled=True,
+    _sudo=True,
+)
 
 # Logrotate
 

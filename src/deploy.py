@@ -6,8 +6,10 @@ from pyinfra.operations import apt, files, server, systemd
 STATIC_FILES = Path(".") / "static"
 
 APT_CACHE_TIME = 3600
+
 ROOT_USER = "root"
 ROOT_GROUP = "root"
+ROOT_FILES_DEFAULT_MODE = "644"
 
 # Locales
 
@@ -39,7 +41,7 @@ files.put(
     dest="/etc/ssh/sshd_config",
     user=ROOT_USER,
     group=ROOT_GROUP,
-    mode="644",
+    mode=ROOT_FILES_DEFAULT_MODE,
     _sudo=True,
 )
 
@@ -63,6 +65,28 @@ apt.packages(
     present=True,
     update=True,
     cache_time=APT_CACHE_TIME,
+    _sudo=True,
+)
+
+# Unattended-upgrades
+
+files.put(
+    name="Files - Put APT periodic config",
+    src=(STATIC_FILES / "20auto-upgrades").as_posix(),
+    dest="/etc/apt/apt.conf.d/20auto-upgrades",
+    user=ROOT_USER,
+    group=ROOT_GROUP,
+    mode=ROOT_FILES_DEFAULT_MODE,
+    _sudo=True,
+)
+
+files.put(
+    name="Files - Put unattended-upgrades config",
+    src=(STATIC_FILES / "50unattended-upgrades").as_posix(),
+    dest="/etc/apt/apt.conf.d/50unattended-upgrades",
+    user=ROOT_USER,
+    group=ROOT_GROUP,
+    mode=ROOT_FILES_DEFAULT_MODE,
     _sudo=True,
 )
 
@@ -120,7 +144,7 @@ files.put(
     dest="/etc/fail2ban/jail.local",
     user=ROOT_USER,
     group=ROOT_GROUP,
-    mode="644",
+    mode=ROOT_FILES_DEFAULT_MODE,
     _sudo=True,
 )
 

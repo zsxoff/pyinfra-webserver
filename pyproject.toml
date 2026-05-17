@@ -7,7 +7,12 @@ requires-python = ">=3.13"
 dependencies = ["pyinfra==3.8.0"]
 
 [dependency-groups]
-dev = ["mypy[faster-cache]==2.1.0", "pyright==1.1.409"]
+dev = [
+  { include-group = "lint" },
+]
+lint = [
+  "mypy[faster-cache]==2.1.0",
+]
 
 [tool.bandit]
 exclude_dirs = [
@@ -68,6 +73,14 @@ disable_error_code = [
   "no-untyped-def",         # In example for https://github.com/grpc/grpc/pull/37877
 ]
 
+[tool.pydoctor]
+add-package = ["pyinfra_webserver"]
+docformat = "google"
+html-output = "build/apidocs"
+project-name = "pyinfra-webserver"
+sidebar-expand-depth = 2
+warnings-as-errors = true
+
 [tool.pyright]
 venv = ".venv"
 venvPath = "."
@@ -103,16 +116,15 @@ quote-style = "double"
 docstring-code-format = true
 
 [tool.ruff.lint]
-select = [
-  "F",             # Pyflakes
-  "E",             # pycodestyle - Error
-  "W",             # pycodestyle - Warning
-]
+select = []
 ignore = [
   "ANN002",        # Missing type annotation for *{name}
   "ANN003",        # Missing type annotation for **{name}
 ]
 extend-select = [
+  "F",             # Pyflakes
+  "E",             # pycodestyle - Error
+  "W",             # pycodestyle - Warning
   "I",             # isort
   "UP",            # pyupgrade
 ]
@@ -125,7 +137,7 @@ extend-select = [
 [tool.ruff.lint.isort]
 lines-after-imports = 2
 lines-between-types = 0
-known-first-party = ["src"]
+known-first-party = ["pyinfra_webserver"]
 known-third-party = ["pyinfra"]
 
 [tool.ruff.lint.mccabe]

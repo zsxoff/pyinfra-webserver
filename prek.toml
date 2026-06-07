@@ -46,7 +46,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.15.13"
+rev = "v0.15.16"
 hooks = [
   {
     id = "ruff-check",
@@ -91,7 +91,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/RobertCraigie/pyright-python"
-rev = "v1.1.409"
+rev = "v1.1.410"
 hooks = [
   {
     id = "pyright",
@@ -101,7 +101,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/astral-sh/uv-pre-commit"
-rev = "0.11.14"
+rev = "0.11.19"
 hooks = [
   {
     id = "uv-lock",
@@ -115,7 +115,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/tombi-toml/tombi-pre-commit"
-rev = "v0.11.5"
+rev = "v1.1.2"
 hooks = [
   {
     id = "tombi-format",

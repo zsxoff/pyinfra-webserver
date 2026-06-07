@@ -50,13 +50,13 @@ sudo systemctl restart sshd.service
 ### On local machine
 
 ```bash
-pyinfra @local ./pyinfra_webserver/deploy.py
+pyinfra @local pyinfra_webserver.deploy.deploy_server
 ```
 
 ### On remote machine
 
 ```bash
-pyinfra --ssh-user infra --ssh-key ~/.ssh/id_ed25519 192.168.0.100 ./pyinfra_webserver/deploy.py
+pyinfra --ssh-user infra --ssh-key ~/.ssh/id_ed25519 192.168.0.100 pyinfra_webserver.deploy.deploy_server
 ```
 
 ### On many remote machines
@@ -64,7 +64,7 @@ pyinfra --ssh-user infra --ssh-key ~/.ssh/id_ed25519 192.168.0.100 ./pyinfra_web
 Copy `inventory.py.example` to `inventory.py`, setup your hosts like official [Create a Deploy](https://docs.pyinfra.com/en/3.x/getting-started.html#create-a-deploy) docs and run:
 
 ```bash
-pyinfra --ssh-user infra --ssh-key ~/.ssh/id_ed25519 inventory.py ./pyinfra_webserver/deploy.py
+pyinfra --ssh-user infra --ssh-key ~/.ssh/id_ed25519 inventory.py pyinfra_webserver.deploy.deploy_server
 ```
 
 ## License

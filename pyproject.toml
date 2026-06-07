@@ -35,18 +35,21 @@ skips = ["*/*_test.py", "*/test_*.py", "./tests/conftest.py"]
 [tool.flake8]
 max-line-length = 120
 exclude = [
-  ".git",              # common env
-  ".idea",             # common env
-  ".venv",             # common env
-  ".vscode",           # common env
-  ".zed",              # common env
-  ".mypy_cache",       # tools
-  ".pytest_cache",     # tools
-  ".ruff_cache",       # tools
-  "dist",              # dist
-  "docs",              # docs
-  "__pycache__",       # cache
+  ".git",                                # common env
+  ".idea",                               # common env
+  ".venv",                               # common env
+  ".vscode",                             # common env
+  ".zed",                                # common env
+  ".mypy_cache",                         # tools
+  ".pytest_cache",                       # tools
+  ".ruff_cache",                         # tools
+  "dist",                                # dist
+  "docs",                                # docs
+  "__pycache__",                         # cache
 ]
+per-file-ignores = """
+    pyinfra_webserver/deploy.py: WPS202
+"""
 
 [tool.mypy]
 strict = true
